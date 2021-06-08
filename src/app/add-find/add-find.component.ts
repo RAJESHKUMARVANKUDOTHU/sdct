@@ -116,11 +116,11 @@ Findsubmit(data){
       this.api.deviceRegister(data).then((res:any)=>{
       //  console.log("find res data====",res);
         if(res.status){
-          var msg = 'Find Registered Successfully'
+          var msg = 'Safr Registered Successfully'
           this.general.openSnackBar(msg,'')
         }
         else if(!res.status && res.alreadyExisted){
-          var msg = 'Device Name or Device Id Already exists, try different device'
+          var msg = 'Safr Name or Safr Id Already exists, try different Safr'
           this.general.openSnackBar(msg,'')
         }
       })
@@ -199,11 +199,11 @@ coinSubmit(data){
       this.api.coinRegister(data).then((res:any)=>{
       //  console.log("coin submit==",res)
         if(res.status){
-          var msg = 'Coin Registered Successfully'
+          var msg = 'Beacon+ Registered Successfully'
           this.general.openSnackBar(msg,'')
         }
         else if(!res.status && res.alreadyExisted){
-          var msg = 'Coin Name or Coin Id Already exists, try different coin'
+          var msg = 'Beacon+ or Beacon+ Id Already exists, try different Beacon+'
           this.general.openSnackBar(msg,'')
         }
       })

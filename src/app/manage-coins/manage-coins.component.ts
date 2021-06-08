@@ -27,8 +27,8 @@ export class ManageCoinsComponent implements OnInit {
   inserted:any=[]
   currentPageLength:any=10
 currentPageSize:any=10
-limit:any
-offset:any
+limit:any=10
+offset:any=0
   displayedColumns = ['i','coinId','coinName','coinType','gatewayId','batteryStatus',	'edit',	'delete'];
 
 
@@ -60,7 +60,8 @@ constructor(public dialog: MatDialog,
     const dialogRef = this.dialog.open(AddFindComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      this.refreshCoins()
+      this.refreshCoins(this.limit,this.offset)
+      this.getDataCount()
     });
 
 
@@ -68,7 +69,7 @@ constructor(public dialog: MatDialog,
   refreshCoins(limit=10,offset=0){
     this.loadData(limit=limit,offset=offset)
     }
-  loadData(limit=10,offset=0){
+  loadData(limit,offset){
     var data={
       userId:this.loginData.userId,
       subUserId: (this.loginData.hasOwnProperty('id') && this.loginData.type==4 && this.loginData.id!=0) ? this.loginData.id : 0,
@@ -80,11 +81,8 @@ constructor(public dialog: MatDialog,
     this.api.getData(data).then((res:any)=>{
       //console.log("coin data ======",res);
       if(res.status){
-
         this.coinData=[]
-
       for (let i = 0; i <res.success.length; i++) {
-
         this.coinData.push(
           {
               i: i+1,
@@ -162,7 +160,8 @@ edit(data){
   const dialogRef = this.dialog.open(EditDeviceComponent, dialogConfig);
 
   dialogRef.afterClosed().subscribe(result => {
-    this.refreshCoins()
+    this.refreshCoins(this.limit,this.offset)
+    this.getDataCount()
   });
 }
 
@@ -180,8 +179,9 @@ delete(value){
     this.api.deletedeviceandUser(data).then((res:any)=>{
       //console.log("coin data ======",res);
       if(res.status){
-        this.refreshCoins()
-        var msg = 'Coin deleted Successfully'
+        this.refreshCoins(this.limit,this.offset)
+        this.getDataCount()
+        var msg = 'Beacon+ deleted Successfully'
         this.general.openSnackBar(msg,'')
       }
     })
@@ -222,8 +222,8 @@ search(a){
   this.dataSource = new MatTableDataSource(this.coinData);
   setTimeout(() => {
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-   this.dataSource.filter =a.trim().toLowerCase()
+   // this.dataSource.paginator = this.paginator;
+    this.dataSource.filter =a.trim().toLowerCase()
 
   })
 }

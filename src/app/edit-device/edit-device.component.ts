@@ -128,7 +128,7 @@ preferredCountries: CountryISO[] = [CountryISO.India];
         this.api.editDeviceRegister(data).then((res:any)=>{
          // console.log("find submit====",res);
           if(res.status){
-            var msg = 'Device Updated Successfully'
+            var msg = 'Safr Updated Successfully'
             this.general.openSnackBar(msg,'')
           }
           else if(!res.status){
@@ -212,11 +212,11 @@ preferredCountries: CountryISO[] = [CountryISO.India];
          // console.log("coin submit==",res)
           if(res.status){
 
-            var msg = 'Coin Updated Successfully'
+            var msg = 'Beacon+ Updated Successfully'
             this.general.openSnackBar(msg,'')
           }
           else if(!res.status && res.alreadyExisted){
-            var msg = 'Coin Name Already exists, try different Coin'
+            var msg = 'Beacon+ Name Already exists, try different Beacon+'
             this.general.openSnackBar(msg,'')
           }
         })

@@ -24,8 +24,8 @@ export class ManageUsersComponent implements OnInit {
   dataSource: any = [];
   currentPageLength:any=10
   currentPageSize:any=10
-  limit:any
-  offset:any
+  limit:any=10
+  offset:any=0
   displayedColumns = ['i','mobileNum','emailId','edit',	'delete'];
 
   constructor(public dialog: MatDialog,private api: ApiService,private login:LoginCheckService,private general:GeneralMaterialsService,) {}
@@ -42,7 +42,8 @@ export class ManageUsersComponent implements OnInit {
     const dialogRef = this.dialog.open(AddFindComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      this.refreshUsers()
+      this.refreshUsers(this.limit,this.offset)
+      this.getDataCount()
     });
   }
 
@@ -52,7 +53,7 @@ export class ManageUsersComponent implements OnInit {
     this.loginData = JSON.parse(this.loginData)
     this.userType=this.loginData.type
 
-    this.refreshUsers()
+    this.refreshUsers(this.limit,this.offset)
     this.getDataCount()
   }
 
@@ -110,7 +111,8 @@ export class ManageUsersComponent implements OnInit {
     const dialogRef = this.dialog.open(EditDeviceComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      this.refreshUsers()
+      this.refreshUsers(this.limit,this.offset)
+      this.getDataCount()
     });
   }
 
@@ -130,7 +132,8 @@ export class ManageUsersComponent implements OnInit {
         // console.log("find data ======",res);
         this.refreshUsers()
         if(res.status){
-          this.refreshUsers()
+          this.refreshUsers(this.limit,this.offset)
+          this.getDataCount()
           var msg = 'Contact Deleted Successfully'
           this.general.openSnackBar(msg,'')
         }
